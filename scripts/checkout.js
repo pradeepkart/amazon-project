@@ -4,10 +4,11 @@ import { formatcurrency } from "./utils/money.js";
 
 let cartsummaryHTML = '';
 cart.forEach((cartItem)=>{
-    const productId = cartItem.productId;
-    let matchingproduct;
+    const cartproductId = cartItem.productId;
+    let matchingproduct;                            /*deduplicating data : we only used product id to obtain this product detials like 
+    image,name etc.*/
     products.forEach((product)=>{
-        if(product.id===productId){
+        if(product.id===cartproductId){
            matchingproduct = product;
         }
         
@@ -102,6 +103,7 @@ document.querySelectorAll('.js-dele-link')
 .forEach((link)=>{
     link.addEventListener("click",()=>{
         const  productId = link.dataset.productId;
+        console.log(productId);
         removefromcart(productId);
 
         const container=document.querySelector(`.js-cart-item-container-${productId}`);

@@ -62,18 +62,20 @@ document.querySelector('.js-product-grid').innerHTML= productshtml;
 document.querySelectorAll('.js-add-to-cart')
     .forEach((button)=>{
       button.addEventListener('click',()=>{
-        const productId = button.dataset.productId;
+       const productId = button.dataset.productId;       /* by clicking button geting the product id*/
         addtocart(productId);
         updatetocartquantity();
       });
     });
+   
 
-    function updatetocartquantity(){
+    function updatetocartquantity(){           /* by using this method it was update to cart*/
       let cartquanty=0;
             cart.forEach((cartItem)=>{
               cartquanty+=cartItem.quantity;
             });
             document.querySelector('.js-cart-quantity').innerHTML=cartquanty;
+            console.log(cartquanty);
     }
 
     

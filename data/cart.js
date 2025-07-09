@@ -19,11 +19,11 @@ function savetothelocalstorage(){
 export function addtocart(productId){
     let matchingItem;
     cart.forEach((cartItem)=>{
-      if(productId===cartItem.productId){
+      if(productId===cartItem.productId){        /* checking product id in the button and product id in the cart*/
         matchingItem = cartItem;
       }
     });
-    if(matchingItem){
+    if(matchingItem){                            /* if it is truthy means add the quantity*/
       matchingItem.quantity+=1;
   
     }
@@ -34,6 +34,7 @@ export function addtocart(productId){
       });
     }
   savetothelocalstorage();
+  
   }
 
   export function removefromcart(productId){
