@@ -1,4 +1,4 @@
-import { cart,removefromcart } from "../data/cart.js";
+import { cart,removefromcart,updatedelivaryoption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatcurrency } from "./utils/money.js";
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
@@ -89,7 +89,7 @@ let html = '';
 
      const ischecked = delivaryoption.id === cartItem.delivaryoptionid;
 
-        html +=  `<div class="delivery-option">
+        html +=  `<div class="delivery-option js-delivry-option">
        <input type="radio"
        ${ischecked? 'checked':'' }
            class="delivery-option-input"
@@ -126,4 +126,12 @@ document.querySelectorAll('.js-dele-link')
     });
 
 
+});
+document.querySelectorAll('.js-delivary-option').forEach((element)=>{
+   
+    element.addEventListener('click',()=>{
+        updatedelivaryoption(productId,delivaryoptionid);
+
+    });
+   
 });
