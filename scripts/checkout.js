@@ -1,6 +1,16 @@
 import { cart,removefromcart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatcurrency } from "./utils/money.js";
+import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import {delivaryoption} from "../data/delivaryoption.js";
+
+hello();
+const today = dayjs();
+const deliverydate=today.add(7,'days');
+console.log(deliverydate.format('dddd MMMM D'));
+
+
 
 let cartsummaryHTML = '';
 cart.forEach((cartItem)=>{
@@ -14,11 +24,23 @@ cart.forEach((cartItem)=>{
         
 
     });
+
+    const delivaryoptionid = cartItem.delivaryoptionid;
+    let delivaryoptions ;
+    delivaryoption.forEach((option)=>{
+       if(option.id===delivaryoptionid){
+        delivaryoptions = option;
+
+       }
+    });
+    const today = dayjs();
+    const delivarydate = today.add(delivaryoptions.delivarydays,'days');
+    const datestring = delivarydate.format('dddd, MMMM D');
     
     cartsummaryHTML+= `
   <div class="cart-item-container js-cart-item-container-${matchingproduct.id}">
    <div class="delivery-date">
-   Delivery date: Tuesday, June 21
+   Delivery date: ${datestring}
    </div>
 
    <div class="cart-item-details-grid">
@@ -49,52 +71,44 @@ cart.forEach((cartItem)=>{
        <div class="delivery-options-title">
        Choose a delivery option:
        </div>
-       <div class="delivery-option">
-       <input type="radio" checked
-           class="delivery-option-input"
-           name="delivery-option-${matchingproduct.id}">
-       <div>
-           <div class="delivery-option-date">
-           Tuesday, June 21
-           </div>
-           <div class="delivery-option-price">
-           FREE Shipping
-           </div>
-       </div>
-       </div>
-       <div class="delivery-option">
-       <input type="radio"
-           class="delivery-option-input"
-           name="delivery-option-${matchingproduct.id}">
-       <div>
-           <div class="delivery-option-date">
-           Wednesday, June 15
-           </div>
-           <div class="delivery-option-price">
-           $4.99 - Shipping
-           </div>
-       </div>
-       </div>
-       <div class="delivery-option">
-       <input type="radio"
-           class="delivery-option-input"
-           name="delivery-option-${matchingproduct.id}">
-       <div>
-           <div class="delivery-option-date">
-           Monday, June 13
-           </div>
-           <div class="delivery-option-price">
-           $9.99 - Shipping
-           </div>
-       </div>
-       </div>
-   </div>
+      ${delivaryoptionshtml(matchingproduct,cartItem)}
    </div>
    </div>
    </div>
 
 `
 });
+
+function delivaryoptionshtml(matchingproduct,cartItem){
+let html = '';
+      delivaryoption.forEach((delivaryoption)=>{
+        const today = dayjs();
+        const delivarydate = today.add(delivaryoption.delivarydays,'days');
+        const datestring = delivarydate.format('dddd, MMMM D');
+        const pricestring = delivaryoption.pricecents===0?'FREE':`$${formatcurrency(delivaryoption.pricecents)} -`;
+
+     const ischecked = delivaryoption.id === cartItem.delivaryoptionid;
+
+        html +=  `<div class="delivery-option">
+       <input type="radio"
+       ${ischecked? 'checked':'' }
+           class="delivery-option-input"
+           name="delivery-option-${matchingproduct.id}">
+       <div>
+           <div class="delivery-option-date">
+           ${datestring}
+           </div>
+           <div class="delivery-option-price">
+           ${pricestring} - Shipping
+           </div>
+       </div>
+       </div>
+       `
+
+      });
+
+      return html;
+}
 
 
 document.querySelector('.js-order-summary').innerHTML =cartsummaryHTML;
@@ -103,7 +117,6 @@ document.querySelectorAll('.js-dele-link')
 .forEach((link)=>{
     link.addEventListener("click",()=>{
         const  productId = link.dataset.productId;
-        console.log(productId);
         removefromcart(productId);
 
         const container=document.querySelector(`.js-cart-item-container-${productId}`);
