@@ -1,14 +1,8 @@
-import { cart,removefromcart,updatedelivaryoption } from "../data/cart.js";
+import { cart,removefromcart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatcurrency } from "./utils/money.js";
-import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import {delivaryoption} from "../data/delivaryoption.js";
-
-hello();
-const today = dayjs();
-const deliverydate=today.add(7,'days');
-console.log(deliverydate.format('dddd MMMM D'));
+import {delivaryoptions} from "../data/delivaryoption.js";
 
 
 
@@ -26,15 +20,15 @@ cart.forEach((cartItem)=>{
     });
 
     const delivaryoptionid = cartItem.delivaryoptionid;
-    let delivaryoptions ;
-    delivaryoption.forEach((option)=>{
+    let delivaryoption ;
+    delivaryoptions.forEach((option)=>{
        if(option.id===delivaryoptionid){
-        delivaryoptions = option;
+        delivaryoption = option;
 
        }
     });
     const today = dayjs();
-    const delivarydate = today.add(delivaryoptions.delivarydays,'days');
+    const delivarydate = today.add(delivaryoption.delivarydays,'days');
     const datestring = delivarydate.format('dddd, MMMM D');
     
     cartsummaryHTML+= `
@@ -81,7 +75,7 @@ cart.forEach((cartItem)=>{
 
 function delivaryoptionshtml(matchingproduct,cartItem){
 let html = '';
-      delivaryoption.forEach((delivaryoption)=>{
+      delivaryoptions.forEach((delivaryoption)=>{
         const today = dayjs();
         const delivarydate = today.add(delivaryoption.delivarydays,'days');
         const datestring = delivarydate.format('dddd, MMMM D');
@@ -89,7 +83,7 @@ let html = '';
 
      const ischecked = delivaryoption.id === cartItem.delivaryoptionid;
 
-        html +=  `<div class="delivery-option js-delivry-option">
+        html +=  `<div class="delivery-option">
        <input type="radio"
        ${ischecked? 'checked':'' }
            class="delivery-option-input"
@@ -126,12 +120,4 @@ document.querySelectorAll('.js-dele-link')
     });
 
 
-});
-document.querySelectorAll('.js-delivary-option').forEach((element)=>{
-   
-    element.addEventListener('click',()=>{
-        updatedelivaryoption(productId,delivaryoptionid);
-
-    });
-   
 });

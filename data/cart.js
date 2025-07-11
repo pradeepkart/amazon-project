@@ -1,5 +1,3 @@
-import { delivaryoption } from "./delivaryoption";
-
 export let cart = JSON.parse(localStorage.getItem('cart'));
                   
      if(!cart){
@@ -52,15 +50,4 @@ export function addtocart(productId){
     });
     cart = newcart;
   savetothelocalstorage();
-  }
-
-  export function updatedelivaryoption(productId,productoptionid){
-    let matchingItem;
-    cart.forEach((cartItem)=>{
-      if(productId===cartItem.productId){        /* checking product id in the button and product id in the cart*/
-        matchingItem = cartItem;
-      }
-    });
-    matchingItem.delivaryoptionid = delivaryoptionid;
-    savetothelocalstorage();
   }

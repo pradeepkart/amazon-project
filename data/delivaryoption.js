@@ -1,4 +1,4 @@
-export const delivaryoption = [{
+export const delivaryoptions = [{
     id : '1',
     delivarydays: 7,
     pricecents: 0
