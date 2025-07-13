@@ -51,3 +51,14 @@ export function addtocart(productId){
     cart = newcart;
   savetothelocalstorage();
   }
+
+  export function updatetodelivaryoption(productId,delivaryoptionid){
+    let matchingItem;
+    cart.forEach((cartItem)=>{
+      if(productId===cartItem.productId){       
+        matchingItem = cartItem;
+      }
+    });
+    matchingItem.delivaryoptionid=delivaryoptionid;
+    savetothelocalstorage();
+  }
