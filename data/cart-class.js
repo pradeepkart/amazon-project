@@ -5,6 +5,7 @@ class Cart {
     constructor(localStorageKey) {
       this.#localStorageKey = localStorageKey;
       this.#loadFromStorage();
+      this.addToCart('4df68c27-fd59-4a6a-bbd1-e754ddb6d53c');
     }
   
     #loadFromStorage() {
@@ -77,9 +78,13 @@ class Cart {
       this.saveToStorage();
     }
   }
+
+  
   
   const cart = new Cart('cart-oop');
+  cart.addToCart('bc2847e9-5323-403f-b7cf-57fde044a955');
   const businessCart = new Cart('cart-business');
+  
   
   console.log(cart);
   console.log(businessCart);
