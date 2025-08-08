@@ -9,10 +9,10 @@ describe('test suite: renderOrderSummary', () => {
 
 beforeAll((done)=>{
   loadProducts(()=>{
-    done();
+    done();                  /*done() is used for flow go to the next step after load the backend*/
   });
  
-})
+});
 
   beforeEach(() => {
     spyOn(localStorage, 'setItem');
