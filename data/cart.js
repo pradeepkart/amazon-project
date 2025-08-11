@@ -71,11 +71,11 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
   saveToStorage();
 }
 
-export function loadCart(fun){
+export function loadCart(renderProductsGrid){
   const xhr = new XMLHttpRequest();
 xhr.addEventListener('load',()=>{
  console.log(xhr.response);
-fun();
+renderProductsGrid();
 });
 
 
