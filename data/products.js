@@ -108,7 +108,10 @@ return response.json();       //get data incase it is an product data
     
     console.log('load products');
   
+  })/*.catch(()=>{
+    console.log('unexpected error.pleasse try again later');
   });
+  */
 
   return promise;
 }
